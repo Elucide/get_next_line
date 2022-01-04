@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:00:31 by yschecro          #+#    #+#             */
-/*   Updated: 2021/12/30 19:07:39 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:19:28 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,34 @@ int	ft_strlen(char *str)
 		return (0);
 }
 
-char	*ft_strndup(char *str, int n)
+int	lcd_bufchr(char *buf, char c)
 {
-	int		i;
-	char	*out;
+	int	len;
 
-	i = 0;
-	out = malloc(sizeof(char) * (ft_strlen(str) + 1));
-	if (!out)
-		return (NULL);
-	if (!str)
-		return (NULL);
-	while (i < n && str[i])
+	len = 0;
+	while (len <= BUFFER_SIZE)
 	{
-		out[i] = str[i];
-		i++;
+		if (buf[len] == c)
+			return (len);
+		len++;
 	}
-	out[i] = 0;
-	return (out);
+	return (BUFFER_SIZE);
 }
+
+void	ft_strncat(char *s1, char *s2, int n)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (s1[i])
+		i++;
+	while (j < n && s2[j])
+	{
+		s1[i] = s2[j];
+		i++;
+		j++;
+	}
+	s1[i] = 0;
+}		
