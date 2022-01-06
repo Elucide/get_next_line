@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:32:37 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/06 07:01:26 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/06 08:55:00 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*ft_fill_line(char *buffer, int fd, char *save)
 			break ;
 		save = ft_strjoin(save, buffer);
 	}
+	printf("save joined :%s\n", save);
 	return (ft_strndup(save));
 }
 
@@ -37,7 +38,7 @@ char	*clean_save(char *save)
 	i = 0;
 	if (!save)
 		return (NULL);
-	while (save[i] && save[i + 1])
+	while (save[i] && save[i] != '\n')
 		i++;
 	if (!save[i] || !save[i + 1])
 		return (free(save), NULL);
@@ -46,13 +47,15 @@ char	*clean_save(char *save)
 	out = malloc(sizeof(char) * (ft_strlen(save + i) + 1));
 	if (!out)
 		return (free(save), NULL);
-	j = -1;
+	j = 0;
 	while (save[i])
 	{
-		out[++j] = save[i];
+		out[j] = save[i];
 		i++;
+		j++;
 	}
-	out[j++] = 0;
+	out[j] = 0;
+//	printf("save trimed :%s\n", out);
 	return (free(save), out);
 }	
 
@@ -65,9 +68,10 @@ char	*get_next_line(int fd)
 	line = "";
 	buffer = "";
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (BUFFER_SIZE < 1 || fd < 0 || !buffer || !save)
+	if (BUFFER_SIZE < 1 || fd < 0 || !buffer)
 		return (NULL);
 	line = ft_fill_line(buffer, fd, save);
+//	printf("save before clean: %s\n", save);
 	save = clean_save(save);
 	return (free(buffer), line);
 }

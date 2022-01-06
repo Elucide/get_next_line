@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:00:31 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/06 06:50:41 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/06 08:48:07 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,21 @@ char	*ft_strndup(char *str)
 	char	*out;
 
 	i = 0;
-	while (str[i])
-	{
-		i++;
-		if (str[i] == '\n')
-			break ;
-	}
-	out = malloc((sizeof(char) * i));
+	if (!str)
+		return (NULL);
+	out = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!out)
 		return (NULL);
-	i = -1;
-	while (str[++i] != '\n' && str[i])
+	i = 0;
+	while (str[i])
+	{
 		out[i] = str[i];
-	out[i++] = 0;
+		i++;
+		if (out[i - 1] == '\n')
+			break ;
+	}
+	out[i] = 0;
+	printf("save duped: _%s_\n", out);
 	return (out);
 }
 
@@ -65,21 +67,31 @@ int	lcd_bufchr(char *buffer, char c)
 	return (0);
 }
 
-char	*ft_strjoin(char *buffer, char *save)
+char	*ft_strjoin(char *save, char *buffer)
 {
 	char	*new_line;
 	int		i;
 	int		j;
 
-	j = -1;
-	i = -1;
+	j = 0;
+	i = 0;
+	if (!save)
+		save = ft_strndup("\0");
+	if (!buffer)
+		return (NULL);
 	new_line = malloc(sizeof(char) * (ft_strlen(buffer) + ft_strlen(save) + 1));
 	if (!new_line)
 		return (NULL);
-	while (buffer[++i])
+	while (save[i])
+	{
 		new_line[i] = save[i];
-	while (save[++i])
-		new_line[i] = buffer[++j];
-	new_line[i++] = 0;
-	return (free(buffer), new_line);
+		i++;
+	}
+	while (buffer[j])
+	{
+		new_line[i + j] = buffer[j];
+		j++;
+	}
+	new_line[i + j] = 0;
+	return (free(save), new_line);
 }
