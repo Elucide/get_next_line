@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:00:31 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/06 06:34:23 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/06 06:50:41 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,16 @@ char	*ft_strndup(char *str)
 	return (out);
 }
 
-int	lcd_bufchr(char *buf, char c)
+int	lcd_bufchr(char *buffer, char c)
 {
 	int	len;
 
 	len = 0;
-	while (buf[len])
+	if (!buffer)
+		return (0);
+	while (buffer[len])
 	{
-		if (buf[len] == c)
+		if (buffer[len] == c)
 			return (1);
 		len++;
 	}

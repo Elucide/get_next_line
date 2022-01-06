@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:32:37 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/06 06:39:02 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/06 07:01:26 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_fill_line(char *buffer, int fd, char *save)
 	int		read_return;
 
 	read_return = 1;
-	while (read_return > 0 && lcd_bufchr(save, '\n'))
+	while (read_return > 0 && !lcd_bufchr(save, '\n'))
 	{
 		read_return = read(fd, buffer, BUFFER_SIZE);
 		buffer[read_return] = 0;
@@ -39,7 +39,7 @@ char	*clean_save(char *save)
 		return (NULL);
 	while (save[i] && save[i + 1])
 		i++;
-	if (!save[i] && !save[i + 1])
+	if (!save[i] || !save[i + 1])
 		return (free(save), NULL);
 	if (save[i])
 		i++;
@@ -64,10 +64,10 @@ char	*get_next_line(int fd)
 
 	line = "";
 	buffer = "";
-	line = ft_fill_line(buffer, fd, save);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (BUFFER_SIZE < 1 || fd < 0 || !buffer || !save)
 		return (NULL);
+	line = ft_fill_line(buffer, fd, save);
 	save = clean_save(save);
 	return (free(buffer), line);
 }
