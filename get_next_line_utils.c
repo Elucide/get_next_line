@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:00:31 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/06 06:25:35 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/06 06:34:23 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ char	*ft_strndup(char *str)
 	i = -1;
 	while (str[++i] != '\n' && str[i])
 		out[i] = str[i];
-	out[++i] = 0;
+	out[i++] = 0;
 	return (out);
 }
-    
+
 int	lcd_bufchr(char *buf, char c)
 {
 	int	len;
@@ -78,6 +78,6 @@ char	*ft_strjoin(char *buffer, char *save)
 		new_line[i] = save[i];
 	while (save[++i])
 		new_line[i] = buffer[++j];
-	new_line[i] = 0;
-	return (new_line);
+	new_line[i++] = 0;
+	return (free(buffer), new_line);
 }

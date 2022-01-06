@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:32:37 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/06 06:24:24 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/06 06:39:02 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ char	*get_next_line(int fd)
 	line = "";
 	buffer = "";
 	line = ft_fill_line(buffer, fd, save);
-	if (!save)
-		save = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (BUFFER_SIZE < 1 || fd < 0 || !buffer || !save)
 		return (NULL);
