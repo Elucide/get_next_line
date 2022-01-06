@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:00:31 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/04 17:19:28 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/06 06:25:35 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,34 +27,57 @@ int	ft_strlen(char *str)
 		return (0);
 }
 
+char	*ft_strndup(char *str)
+{
+	int		i;
+	char	*out;
+
+	i = 0;
+	while (str[i])
+	{
+		i++;
+		if (str[i] == '\n')
+			break ;
+	}
+	out = malloc((sizeof(char) * i));
+	if (!out)
+		return (NULL);
+	i = -1;
+	while (str[++i] != '\n' && str[i])
+		out[i] = str[i];
+	out[++i] = 0;
+	return (out);
+}
+    
 int	lcd_bufchr(char *buf, char c)
 {
 	int	len;
 
 	len = 0;
-	while (len <= BUFFER_SIZE)
+	while (buf[len])
 	{
 		if (buf[len] == c)
-			return (len);
+			return (1);
 		len++;
 	}
-	return (BUFFER_SIZE);
+	return (0);
 }
 
-void	ft_strncat(char *s1, char *s2, int n)
+char	*ft_strjoin(char *buffer, char *save)
 {
-	int	i;
-	int	j;
+	char	*new_line;
+	int		i;
+	int		j;
 
-	j = 0;
-	i = 0;
-	while (s1[i])
-		i++;
-	while (j < n && s2[j])
-	{
-		s1[i] = s2[j];
-		i++;
-		j++;
-	}
-	s1[i] = 0;
-}		
+	j = -1;
+	i = -1;
+	new_line = malloc(sizeof(char) * (ft_strlen(buffer) + ft_strlen(save) + 1));
+	if (!new_line)
+		return (NULL);
+	while (buffer[++i])
+		new_line[i] = save[i];
+	while (save[++i])
+		new_line[i] = buffer[++j];
+	new_line[i] = 0;
+	return (new_line);
+}

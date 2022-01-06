@@ -6,56 +6,70 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:32:37 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/04 17:23:27 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/06 06:24:24 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_n_line(int fd, int actual_line)
+char	*ft_fill_line(char *buffer, int fd, char *save)
 {
-	int		n;
-	char	*buffer;
 	int		read_return;
 
-	n = 0;
 	read_return = 1;
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	while (read_return)
+	while (read_return > 0 && lcd_bufchr(save, '\n'))
 	{
-		if (actual_line == n)
-			return (1)
 		read_return = read(fd, buffer, BUFFER_SIZE);
-		if (lcd_bufchr(buffer, '\n') < BUFFER_SIZE)
-			n++;
-		if (lcd_bufchr(buffer, 0) < BUFFER_SIZE)
-			break;
+		buffer[read_return] = 0;
+		if (read_return <= 0)
+			break ;
+		save = ft_strjoin(save, buffer);
 	}
-	return (0);
+	return (ft_strndup(save));
 }
+
+char	*clean_save(char *save)
+{
+	char	*out;
+	int		i;
+	int		j;
+
+	i = 0;
+	if (!save)
+		return (NULL);
+	while (save[i] && save[i + 1])
+		i++;
+	if (!save[i] && !save[i + 1])
+		return (free(save), NULL);
+	if (save[i])
+		i++;
+	out = malloc(sizeof(char) * (ft_strlen(save + i) + 1));
+	if (!out)
+		return (free(save), NULL);
+	j = -1;
+	while (save[i])
+	{
+		out[++j] = save[i];
+		i++;
+	}
+	out[j++] = 0;
+	return (free(save), out);
+}	
 
 char	*get_next_line(int fd)
 {
-	char	*line;
-	char	*buffer;
-	int		read_return;
+	char		*line;
+	char		*buffer;
+	static char	*save = NULL;
 
-	line = malloc(1000);
-	read_return = 1;
+	line = "";
+	buffer = "";
+	line = ft_fill_line(buffer, fd, save);
+	if (!save)
+		save = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (BUFFER_SIZE <= 1 || fd <= 2 || !buffer)
+	if (BUFFER_SIZE < 1 || fd < 0 || !buffer || !save)
 		return (NULL);
-	while (read_return)
-	{
-		ft_strncat(line, buffer, lcd_bufchr(buffer));
-		printf("line: _%s_\n", line);
-		read_return = read(fd, buffer, BUFFER_SIZE);
-		printf("buffer: _%s_\n", buffer);
-		if (lcd_bufchr(buffer) < BUFFER_SIZE)
-		{
-			ft_strncat(line, buffer, lcd_bufchr(buffer));
-			return (free(buffer), line);
-		}
-	}
-	return (free(buffer), NULL);
+	save = clean_save(save);
+	return (free(buffer), line);
 }
