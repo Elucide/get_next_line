@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 19:00:31 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/06 08:48:07 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/08 21:24:05 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char	*ft_strndup(char *str)
 			break ;
 	}
 	out[i] = 0;
-	printf("save duped: _%s_\n", out);
 	return (out);
 }
 

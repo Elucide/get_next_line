@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 18:41:56 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/06 06:24:09 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/08 21:20:52 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strjoin(char *buffer, char *save);
 
 //get_next_line
 
-char	*ft_fill_line(char *buffer, int fdi, char *save);
+char	*ft_fill_line(char *buffer, int fdi, char **save);
 char	*clean_save(char *save);
 char	*get_next_line(int fd);
 

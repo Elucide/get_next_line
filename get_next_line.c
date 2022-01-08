@@ -6,27 +6,26 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:32:37 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/06 08:55:00 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/08 21:24:08 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_fill_line(char *buffer, int fd, char *save)
+char	*ft_fill_line(char *buffer, int fd, char **save)
 {
 	int		read_return;
 
 	read_return = 1;
-	while (read_return > 0 && !lcd_bufchr(save, '\n'))
+	while (read_return > 0 && !lcd_bufchr(*save, '\n'))
 	{
 		read_return = read(fd, buffer, BUFFER_SIZE);
 		buffer[read_return] = 0;
 		if (read_return <= 0)
 			break ;
-		save = ft_strjoin(save, buffer);
+		*save = ft_strjoin(*save, buffer);
 	}
-	printf("save joined :%s\n", save);
-	return (ft_strndup(save));
+	return (ft_strndup(*save));
 }
 
 char	*clean_save(char *save)
@@ -55,7 +54,6 @@ char	*clean_save(char *save)
 		j++;
 	}
 	out[j] = 0;
-//	printf("save trimed :%s\n", out);
 	return (free(save), out);
 }	
 
@@ -70,8 +68,7 @@ char	*get_next_line(int fd)
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (BUFFER_SIZE < 1 || fd < 0 || !buffer)
 		return (NULL);
-	line = ft_fill_line(buffer, fd, save);
-//	printf("save before clean: %s\n", save);
+	line = ft_fill_line(buffer, fd, &save);
 	save = clean_save(save);
 	return (free(buffer), line);
 }
