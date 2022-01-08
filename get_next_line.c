@@ -6,7 +6,7 @@
 /*   By: yschecro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 12:32:37 by yschecro          #+#    #+#             */
-/*   Updated: 2022/01/08 21:24:08 by yschecro         ###   ########.fr       */
+/*   Updated: 2022/01/08 22:14:40 by yschecro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char	*ft_fill_line(char *buffer, int fd, char **save)
 	while (read_return > 0 && !lcd_bufchr(*save, '\n'))
 	{
 		read_return = read(fd, buffer, BUFFER_SIZE);
-		buffer[read_return] = 0;
 		if (read_return <= 0)
 			break ;
+		buffer[read_return] = 0;
 		*save = ft_strjoin(*save, buffer);
 	}
 	return (ft_strndup(*save));
